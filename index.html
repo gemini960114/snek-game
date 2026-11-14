@@ -3,21 +3,28 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-<title>Snek — Snake Game</title>
+<title>Snek — Christmas Edition 🎄</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+<ul class="christmas-lights" aria-hidden="true">
+  <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+  <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+  <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+</ul>
+<div class="snow-container" aria-hidden="true"></div>
 <div class="bg-blob blob-1"></div>
 <div class="bg-blob blob-2"></div>
+<div class="bg-blob blob-3"></div>
 <div class="bg-grid"></div>
 
 <header class="topbar">
   <div class="logo">
-    <span class="logo-icon">🐍</span>
+    <span class="logo-icon">🐍<span class="santa-hat">🎅</span></span>
     <span class="logo-text">SNEK</span>
-    <span class="logo-sub">RETRO EDITION</span>
+    <span class="logo-sub">🎄 CHRISTMAS EDITION</span>
   </div>
   <div class="topbar-actions">
     <button id="btnSettings" class="icon-btn" aria-label="Settings">⚙️</button>
@@ -106,10 +113,10 @@
       <!-- Overlays -->
       <div id="overlayStart" class="overlay show">
         <div class="overlay-card">
-          <div class="overlay-icon">🐍</div>
-          <h1>Ready to Slither?</h1>
-          <p>Eat apples, grow long, don't hit yourself!</p>
-          <button id="btnPlay" class="btn btn-primary btn-lg">▶ PLAY</button>
+          <div class="overlay-icon">🎅🐍🎄</div>
+          <h1>Merry Slithering!</h1>
+          <p>Catch festive apples, grow long, and stay cozy! 🎁</p>
+          <button id="btnPlay" class="btn btn-primary btn-lg">▶ PLAY NOW</button>
           <p class="overlay-hint">Press any arrow key / WASD to start</p>
         </div>
       </div>
@@ -156,12 +163,12 @@
   <!-- Right Panel -->
   <section class="panel right-panel">
     <div class="leader-card">
-      <div class="leader-title">HOW TO PLAY</div>
+      <div class="leader-title">HOW TO PLAY 🎄</div>
       <ul class="leader-list">
-        <li><span class="dot green"></span>Eat <strong>red apples</strong> to grow</li>
-        <li><span class="dot gold"></span>Golden apples = <strong>+50</strong> bonus!</li>
-        <li><span class="dot purple"></span>Avoid hitting walls or yourself</li>
-        <li>Hold direction to keep moving</li>
+        <li><span class="dot green"></span>Eat <strong>festive apples</strong> to grow</li>
+        <li><span class="dot gold"></span>Golden stars = <strong>+50</strong> bonus! ⭐</li>
+        <li><span class="dot purple"></span>Avoid hitting icy walls or yourself</li>
+        <li>Hold direction to keep slithering</li>
       </ul>
     </div>
     <div class="stat-card">
@@ -172,8 +179,8 @@
       <div class="level-labels"><span>Slow</span><span id="levelText">Lv. 1</span><span>Turbo</span></div>
     </div>
     <footer class="footer">
-      Built with ❤️ • No framework • Works offline<br>
-      <small>Tip: Try Huge grid + Wrap Walls for chaos mode</small>
+      Built with ❤️ & Holiday Cheer 🎄 • Works offline<br>
+      <small>Tip: Try Huge grid + Wrap Walls for cozy winter chaos mode ❄️</small>
     </footer>
   </section>
 </main>

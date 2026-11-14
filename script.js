@@ -218,8 +218,8 @@
         // clear
         ctx.clearRect(0, 0, W, H);
 
-        // subtle grid
-        ctx.strokeStyle = "rgba(255,255,255,0.05)";
+        // subtle icy grid
+        ctx.strokeStyle = "rgba(180, 225, 255, 0.07)";
         ctx.lineWidth = 1;
         for (let i = 0; i <= GRID; i++) {
             const p = Math.round(i * cell) + 0.5;
@@ -448,7 +448,31 @@
         p.style.display = p.style.display === "none" ? "" : "none";
     });
 
+    // Christmas falling snowflakes generator
+    function initSnow() {
+        const snowContainer = document.querySelector(".snow-container");
+        if (!snowContainer) return;
+        const count = 42;
+        const flakeChars = ["❄", "❅", "❆", "•", "·", "❄️"];
+        for (let i = 0; i < count; i++) {
+            const flake = document.createElement("span");
+            flake.className = "snowflake";
+            flake.textContent = flakeChars[Math.floor(Math.random() * flakeChars.length)];
+            flake.style.left = (Math.random() * 98 + 1).toFixed(2) + "vw";
+            const duration = (Math.random() * 6 + 6).toFixed(1);
+            flake.style.animationDuration = duration + "s";
+            flake.style.animationDelay = (Math.random() * 7).toFixed(1) + "s";
+            flake.style.fontSize = (Math.random() * 12 + 10).toFixed(0) + "px";
+            flake.style.opacity = (Math.random() * 0.65 + 0.35).toFixed(2);
+            if (Math.random() > 0.65) {
+                flake.style.filter = "blur(1.5px)";
+            }
+            snowContainer.appendChild(flake);
+        }
+    }
+
     // Init
+    initSnow();
     bestEl.textContent = best;
     resetGame();
     gameState = "idle";

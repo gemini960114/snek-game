@@ -1,15 +1,17 @@
 :root {
-    --bg: #0a0f1a;
-    --panel: #121a2b;
-    --panel2: #17233d;
-    --border: #24324f;
+    --bg: #07131a;
+    --panel: #0d1e26;
+    --panel2: #132a35;
+    --border: #20414d;
     --accent: #3bff88;
-    --accent2: #7af8ff;
-    --danger: #ff4d6d;
-    --gold: #ffc83d;
-    --text: #e6edf8;
-    --muted: #8ea0bd;
+    --accent2: #ff4d6d;
+    --danger: #ff3344;
+    --gold: #ffd166;
+    --text: #f0f8ff;
+    --muted: #8faec0;
     --radius: 16px;
+    --xmas-red: #d90429;
+    --xmas-green: #2d6a4f;
 }
 
 * {
@@ -24,18 +26,145 @@ body {
 
 body {
     font-family: 'Space Grotesk', system-ui, sans-serif;
-    background: var(--bg);
+    background: radial-gradient(ellipse at 50% -10%, #102a36 0%, #08161f 45%, #040d13 100%);
+    background-attachment: fixed;
     color: var(--text);
     overflow-x: hidden;
     position: relative;
+    min-height: 100vh;
+}
+
+/* Christmas String Lights */
+.christmas-lights {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 28px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    pointer-events: none;
+    z-index: 100;
+    list-style: none;
+    border-top: 2px solid #1a3326;
+}
+
+.christmas-lights li {
+    position: relative;
+    top: 0;
+    width: 10px;
+    height: 14px;
+    border-radius: 50% 50% 60% 60%;
+    margin: 0 4px;
+    list-style: none;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+.christmas-lights li::before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: 3px;
+    width: 4px;
+    height: 4px;
+    background: #0f2219;
+    border-radius: 2px;
+}
+
+.christmas-lights li:nth-child(4n+1) {
+    background: #ff3344;
+    box-shadow: 0 3px 12px #ff3344, 0 0 18px rgba(255, 51, 68, 0.7);
+    animation-name: lightTwinkle1;
+}
+
+.christmas-lights li:nth-child(4n+2) {
+    background: #2ec4b6;
+    box-shadow: 0 3px 12px #2ec4b6, 0 0 18px rgba(46, 196, 182, 0.7);
+    animation-name: lightTwinkle2;
+}
+
+.christmas-lights li:nth-child(4n+3) {
+    background: #ffd166;
+    box-shadow: 0 3px 12px #ffd166, 0 0 18px rgba(255, 209, 102, 0.7);
+    animation-name: lightTwinkle3;
+}
+
+.christmas-lights li:nth-child(4n) {
+    background: #60a5fa;
+    box-shadow: 0 3px 12px #60a5fa, 0 0 18px rgba(96, 165, 250, 0.7);
+    animation-name: lightTwinkle4;
+}
+
+@keyframes lightTwinkle1 {
+    0%, 100% { opacity: 1; filter: brightness(1.2); }
+    50% { opacity: 0.35; filter: brightness(0.6); }
+}
+
+@keyframes lightTwinkle2 {
+    0%, 100% { opacity: 0.35; filter: brightness(0.6); }
+    50% { opacity: 1; filter: brightness(1.2); }
+}
+
+@keyframes lightTwinkle3 {
+    0%, 100% { opacity: 0.9; filter: brightness(1.1); }
+    35% { opacity: 0.3; filter: brightness(0.5); }
+    75% { opacity: 1; filter: brightness(1.3); }
+}
+
+@keyframes lightTwinkle4 {
+    0%, 100% { opacity: 0.4; filter: brightness(0.7); }
+    60% { opacity: 1; filter: brightness(1.25); }
+}
+
+/* Falling Snowflakes */
+.snow-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.snowflake {
+    position: absolute;
+    top: -30px;
+    color: #ffffff;
+    user-select: none;
+    pointer-events: none;
+    animation-name: snowfall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.9), 0 0 16px rgba(186, 230, 253, 0.7);
+}
+
+@keyframes snowfall {
+    0% {
+        transform: translateY(-20px) translateX(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(28vh) translateX(14px) rotate(80deg);
+    }
+    50% {
+        transform: translateY(55vh) translateX(-12px) rotate(180deg);
+    }
+    75% {
+        transform: translateY(82vh) translateX(16px) rotate(270deg);
+    }
+    100% {
+        transform: translateY(105vh) translateX(-8px) rotate(360deg);
+    }
 }
 
 .bg-grid {
     position: fixed;
     inset: 0;
     background-image:
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        linear-gradient(rgba(180, 225, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(180, 225, 255, 0.03) 1px, transparent 1px);
     background-size: 32px 32px;
     pointer-events: none;
     z-index: -1;
@@ -48,24 +177,34 @@ body {
     width: 600px;
     height: 600px;
     border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.35;
+    filter: blur(90px);
+    opacity: 0.4;
 }
 
 .blob-1 {
     top: -120px;
     right: -80px;
-    background: radial-gradient(circle at 30% 30%, #2af598, #009efd 60%, transparent 70%)
+    background: radial-gradient(circle at 40% 40%, rgba(220, 38, 38, 0.45), rgba(153, 27, 27, 0.2) 60%, transparent 75%);
 }
 
 .blob-2 {
     bottom: -200px;
     left: -150px;
-    background: radial-gradient(circle at 50% 50%, #a162f7, #3b82ff 60%, transparent 70%)
+    background: radial-gradient(circle at 50% 50%, rgba(45, 106, 79, 0.55), rgba(20, 83, 45, 0.25) 60%, transparent 75%);
+}
+
+.blob-3 {
+    top: 45%;
+    left: 40%;
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 209, 102, 0.2), rgba(245, 158, 11, 0.08) 55%, transparent 72%);
 }
 
 /* Topbar */
 .topbar {
+    position: relative;
+    z-index: 1;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -77,27 +216,42 @@ body {
 .logo {
     display: flex;
     align-items: center;
-    gap: 10px
+    gap: 10px;
 }
 
 .logo-icon {
     font-size: 28px;
-    filter: drop-shadow(0 0 8px var(--accent))
+    position: relative;
+    filter: drop-shadow(0 0 10px rgba(59, 255, 136, 0.8));
+}
+
+.santa-hat {
+    position: absolute;
+    top: -11px;
+    left: 10px;
+    font-size: 16px;
+    transform: rotate(18deg);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
 .logo-text {
     font-weight: 700;
     font-size: 24px;
-    letter-spacing: 0.04em
+    letter-spacing: 0.04em;
+    background: linear-gradient(135deg, #ffffff 40%, #ffd166 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .logo-sub {
     font-size: 11px;
-    color: var(--muted);
-    border: 1px solid var(--border);
-    padding: 3px 8px;
+    color: #ffd166;
+    border: 1px solid rgba(255, 209, 102, 0.35);
+    background: rgba(255, 209, 102, 0.1);
+    padding: 3px 10px;
     border-radius: 999px;
-    letter-spacing: 0.08em
+    letter-spacing: 0.08em;
+    font-weight: 600;
 }
 
 .icon-btn {
@@ -151,10 +305,11 @@ body {
 }
 
 .stat-card {
-    background: linear-gradient(180deg, var(--panel2), var(--panel));
+    background: linear-gradient(180deg, rgba(20, 42, 53, 0.92), rgba(13, 30, 38, 0.92));
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 16px;
+    backdrop-filter: blur(8px);
 }
 
 .stat-label {
@@ -196,10 +351,11 @@ body {
 .controls-card,
 .settings-card,
 .leader-card {
-    background: var(--panel);
+    background: rgba(13, 30, 38, 0.9);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 16px;
+    backdrop-filter: blur(8px);
 }
 
 .controls-title,
@@ -270,15 +426,16 @@ body {
 }
 
 .btn-primary {
-    background: var(--accent);
-    color: #07110b;
+    background: linear-gradient(135deg, #2ec4b6, #209388);
+    color: #ffffff;
     border-color: transparent;
-    box-shadow: 0 6px 20px rgba(59, 255, 136, 0.35)
+    box-shadow: 0 6px 20px rgba(46, 196, 182, 0.35);
 }
 
 .btn-primary:hover {
     transform: translateY(-1px);
-    filter: brightness(1.08)
+    filter: brightness(1.1);
+    box-shadow: 0 8px 24px rgba(46, 196, 182, 0.5);
 }
 
 .btn-ghost {
@@ -287,7 +444,7 @@ body {
 }
 
 .btn-ghost:hover {
-    background: #1e3158
+    background: #1a3847
 }
 
 .btn-lg {
@@ -402,11 +559,11 @@ body {
 
 .canvas-outer {
     position: relative;
-    background: radial-gradient(600px 400px at 30% 20%, #14213a, #0b1220 70%);
-    border: 1px solid var(--border);
+    background: radial-gradient(600px 400px at 30% 20%, #112830, #08171f 70%);
+    border: 1px solid rgba(135, 206, 235, 0.28);
     border-radius: 18px;
     padding: 14px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65), 0 0 35px rgba(45, 106, 79, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.12);
     overflow: hidden;
 }
 
@@ -416,9 +573,9 @@ body {
     height: auto;
     aspect-ratio: 1/1;
     background:
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        #0a1222;
+        linear-gradient(rgba(175, 220, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(175, 220, 255, 0.04) 1px, transparent 1px),
+        #07141b;
     background-size: calc(100% / 20) calc(100% / 20);
     border-radius: 12px;
     touch-action: none;

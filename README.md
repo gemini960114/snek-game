@@ -1,6 +1,6 @@
-# 🐍 SNEK — Retro Edition
+# 🐍 SNEK — Christmas & Holiday Edition 🎄🎅
 
-A modern, polished retro Snake game built with vanilla HTML5 Canvas, CSS3, and JavaScript — no frameworks, no dependencies, works completely offline.
+A modern, polished retro Snake game with festive Christmas vibes, built with vanilla HTML5 Canvas, CSS3, and JavaScript — no frameworks, no dependencies, works completely offline.
 
 🎮 **[Play Live on GitHub Pages](https://gemini960114.github.io/snek-game/)**
 
