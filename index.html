@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>Snek — Snake Game</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div class="bg-blob blob-1"></div>
+<div class="bg-blob blob-2"></div>
+<div class="bg-grid"></div>
+
+<header class="topbar">
+  <div class="logo">
+    <span class="logo-icon">🐍</span>
+    <span class="logo-text">SNEK</span>
+    <span class="logo-sub">RETRO EDITION</span>
+  </div>
+  <div class="topbar-actions">
+    <button id="btnSettings" class="icon-btn" aria-label="Settings">⚙️</button>
+    <button id="btnHelp" class="icon-btn" aria-label="Help">?</button>
+  </div>
+</header>
+
+<main class="layout">
+  <!-- Left Panel -->
+  <section class="panel left-panel">
+    <div class="stat-card">
+      <div class="stat-label">SCORE</div>
+      <div id="score" class="stat-value">0</div>
+      <div class="stat-sub">+10 per apple</div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-card small">
+        <div class="stat-label">BEST</div>
+        <div id="best" class="stat-value sm">0</div>
+      </div>
+      <div class="stat-card small">
+        <div class="stat-label">LENGTH</div>
+        <div id="length" class="stat-value sm">3</div>
+      </div>
+    </div>
+
+    <div class="controls-card">
+      <div class="controls-title">CONTROLS</div>
+      <div class="key-grid">
+        <div></div><kbd>W</kbd><div></div>
+        <kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>
+      </div>
+      <p class="controls-hint">or Arrow Keys • Swipe on mobile<br><kbd>SPACE</kbd> pause • <kbd>R</kbd> restart</p>
+      <div class="action-btns">
+        <button id="btnPause" class="btn btn-ghost">⏸ Pause</button>
+        <button id="btnRestart" class="btn btn-primary">↻ Restart</button>
+      </div>
+    </div>
+
+    <div class="settings-card" id="settingsPanel">
+      <div class="settings-title">SETTINGS</div>
+      <label class="setting-row">
+        <span>Speed</span>
+        <select id="speedSelect">
+          <option value="80">Turbo (80ms)</option>
+          <option value="110" selected>Normal (110ms)</option>
+          <option value="160">Chill (160ms)</option>
+          <option value="220">Slow (220ms)</option>
+        </select>
+      </label>
+      <label class="setting-row">
+        <span>Grid Size</span>
+        <select id="gridSelect">
+          <option value="15">Small (15×15)</option>
+          <option value="20" selected>Medium (20×20)</option>
+          <option value="25">Large (25×25)</option>
+          <option value="30">Huge (30×30)</option>
+        </select>
+      </label>
+      <label class="setting-row toggle">
+        <span>Wrap Walls <small>pass through edges</small></span>
+        <input type="checkbox" id="wrapToggle"/>
+        <span class="toggle-ui"></span>
+      </label>
+      <label class="setting-row toggle">
+        <span>Sound</span>
+        <input type="checkbox" id="soundToggle" checked/>
+        <span class="toggle-ui"></span>
+      </label>
+    </div>
+  </section>
+
+  <!-- Center: Game -->
+  <section class="game-wrap">
+    <div class="game-header">
+      <div class="badge">● LIVE</div>
+      <div class="game-header-right">
+        <span id="speedBadge" class="badge muted">110ms</span>
+        <span id="modeBadge" class="badge muted">WALLS: SOLID</span>
+      </div>
+    </div>
+
+    <div class="canvas-outer" id="canvasOuter">
+      <canvas id="game" width="600" height="600" aria-label="Snake game board"></canvas>
+
+      <!-- Overlays -->
+      <div id="overlayStart" class="overlay show">
+        <div class="overlay-card">
+          <div class="overlay-icon">🐍</div>
+          <h1>Ready to Slither?</h1>
+          <p>Eat apples, grow long, don't hit yourself!</p>
+          <button id="btnPlay" class="btn btn-primary btn-lg">▶ PLAY</button>
+          <p class="overlay-hint">Press any arrow key / WASD to start</p>
+        </div>
+      </div>
+
+      <div id="overlayPause" class="overlay">
+        <div class="overlay-card">
+          <div class="overlay-icon">⏸</div>
+          <h1>Paused</h1>
+          <p>Take a breath</p>
+          <div class="overlay-actions">
+            <button id="btnResume" class="btn btn-primary">Resume</button>
+            <button id="btnRestart2" class="btn btn-ghost">Restart</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="overlayGameOver" class="overlay">
+        <div class="overlay-card danger">
+          <div class="overlay-icon">💥</div>
+          <h1>Game Over</h1>
+          <p id="gameOverReason">You hit the wall!</p>
+          <div class="final-stats">
+            <div><span>Score</span><strong id="finalScore">0</strong></div>
+            <div><span>Best</span><strong id="finalBest">0</strong></div>
+            <div><span>Length</span><strong id="finalLength">0</strong></div>
+          </div>
+          <button id="btnAgain" class="btn btn-primary btn-lg">↻ Play Again</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile D-Pad -->
+    <div class="dpad">
+      <button class="dpad-btn up" data-dir="up" aria-label="Up">▲</button>
+      <div class="dpad-middle">
+        <button class="dpad-btn left" data-dir="left" aria-label="Left">◀</button>
+        <button class="dpad-btn center" id="btnDPadPause" aria-label="Pause">⏸</button>
+        <button class="dpad-btn right" data-dir="right" aria-label="Right">▶</button>
+      </div>
+      <button class="dpad-btn down" data-dir="down" aria-label="Down">▼</button>
+    </div>
+  </section>
+
+  <!-- Right Panel -->
+  <section class="panel right-panel">
+    <div class="leader-card">
+      <div class="leader-title">HOW TO PLAY</div>
+      <ul class="leader-list">
+        <li><span class="dot green"></span>Eat <strong>red apples</strong> to grow</li>
+        <li><span class="dot gold"></span>Golden apples = <strong>+50</strong> bonus!</li>
+        <li><span class="dot purple"></span>Avoid hitting walls or yourself</li>
+        <li>Hold direction to keep moving</li>
+      </ul>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">SPEED LEVEL</div>
+      <div class="level-bar">
+        <div id="levelFill" class="level-fill" style="width: 40%"></div>
+      </div>
+      <div class="level-labels"><span>Slow</span><span id="levelText">Lv. 1</span><span>Turbo</span></div>
+    </div>
+    <footer class="footer">
+      Built with ❤️ • No framework • Works offline<br>
+      <small>Tip: Try Huge grid + Wrap Walls for chaos mode</small>
+    </footer>
+  </section>
+</main>
+
+<!-- Help Modal -->
+<dialog id="helpDialog">
+  <h3>About SNEK</h3>
+  <p>Classic Snake with modern polish. Canvas-rendered, responsive, keyboard + touch + swipe support, local high-score persistence, and adjustable grid/speed.</p>
+  <ul>
+    <li><strong>Apples:</strong> Red (10 pts), Gold (50 pts, 10% spawn chance)</li>
+    <li><strong>Walls:</strong> Solid ends game; Wrap teleports you.</li>
+    <li><strong>Scoring:</strong> Score increases speed every 50 pts.</li>
+  </ul>
+  <form method="dialog"><button class="btn btn-primary">Got it</button></form>
+</dialog>
+
+<script src="script.js"></script>
+</body>
+</html>
